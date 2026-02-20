@@ -2,75 +2,421 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>김영훈 포트폴리오</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
+      * {
+        box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
+
+      :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --bg-nav: rgba(13, 17, 23, 0.92);
+        --border: #30363d;
+        --text: #e6edf3;
+        --text-muted: #8b949e;
+        --accent: #58a6ff;
+        --accent-glow: rgba(88, 166, 255, 0.15);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        line-height: 1.7;
+      }
+
+      /* ── Nav ── */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: var(--bg-nav);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+        z-index: 100;
+        padding: 0 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
+      }
+
+      .nav-logo {
+        font-weight: 700;
+        color: var(--accent);
+        font-size: 1.1rem;
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 32px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+
+      /* ── Hero ── */
       header {
-        background: #111;
-        color: #fff;
-        padding: 50px 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         text-align: center;
+        padding: 80px 20px 40px;
+        position: relative;
+        overflow: hidden;
       }
+
+      header::before {
+        content: '';
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(88, 166, 255, 0.08) 0%, transparent 70%);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      .hero-badge {
+        display: inline-block;
+        background: var(--accent-glow);
+        color: var(--accent);
+        border: 1px solid rgba(88, 166, 255, 0.3);
+        border-radius: 20px;
+        padding: 4px 16px;
+        font-size: 0.82rem;
+        margin-bottom: 20px;
+        letter-spacing: 0.5px;
+      }
+
+      header h1 {
+        font-size: clamp(2rem, 6vw, 3.5rem);
+        font-weight: 700;
+        margin-bottom: 16px;
+        letter-spacing: -1px;
+      }
+
+      header p {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        max-width: 480px;
+      }
+
+      .hero-cta {
+        margin-top: 36px;
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .btn {
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.2s;
+        font-weight: 500;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #0d1117;
+      }
+
+      .btn-primary:hover {
+        background: #79b8ff;
+      }
+
+      .btn-outline {
+        border: 1px solid var(--border);
+        color: var(--text);
+      }
+
+      .btn-outline:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* ── Sections ── */
       section {
-        padding: 40px 20px;
-        max-width: 900px;
-        margin: auto;
+        padding: 80px 20px;
+        max-width: 860px;
+        margin: 0 auto;
       }
+
+      .section-label {
+        color: var(--accent);
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
       h2 {
-        border-bottom: 2px solid #ddd;
-        padding-bottom: 10px;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 32px;
+        letter-spacing: -0.5px;
       }
-      .project {
-        margin-bottom: 30px;
+
+      /* ── About ── */
+      .about-text {
+        color: var(--text-muted);
+        font-size: 1.05rem;
+        max-width: 600px;
       }
+
+      /* ── Skills ── */
+      .skill-groups {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+
+      .skill-group h3 {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 14px;
+        font-weight: 600;
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .tag {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 6px 16px;
+        font-size: 0.88rem;
+        color: var(--text);
+        transition: border-color 0.2s, color 0.2s;
+        cursor: default;
+      }
+
+      .tag:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* ── Projects ── */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 20px;
+      }
+
+      .project-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 28px;
+        transition: border-color 0.2s, transform 0.2s;
+      }
+
+      .project-card:hover {
+        border-color: var(--accent);
+        transform: translateY(-3px);
+      }
+
+      .project-card h3 {
+        font-size: 1.05rem;
+        margin-bottom: 10px;
+      }
+
+      .project-card p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+      }
+
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+
+      .project-tag {
+        background: var(--accent-glow);
+        color: var(--accent);
+        border-radius: 4px;
+        padding: 2px 10px;
+        font-size: 0.78rem;
+        font-weight: 500;
+      }
+
+      .project-link {
+        color: var(--accent);
+        text-decoration: none;
+        font-size: 0.88rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .project-link:hover {
+        text-decoration: underline;
+      }
+
+      /* ── Divider ── */
+      .divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        max-width: 860px;
+        margin: 0 auto;
+      }
+
+      /* ── Footer ── */
       footer {
-        background: #f1f1f1;
         text-align: center;
-        padding: 20px;
+        padding: 40px 20px;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        border-top: 1px solid var(--border);
         margin-top: 40px;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 600px) {
+        nav {
+          padding: 0 20px;
+        }
+
+        .nav-links {
+          gap: 20px;
+        }
+
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
   <body>
+
+    <!-- Navigation -->
+    <nav>
+      <a href="#" class="nav-logo">YH.</a>
+      <ul class="nav-links">
+        <li><a href="#about">소개</a></li>
+        <li><a href="#skills">기술</a></li>
+        <li><a href="#projects">프로젝트</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero -->
     <header>
-      <h1>김영훈 포트폴리오</h1>
-      <p>Frontend Developer | Web Developer</p>
+      <div class="hero-badge">Frontend Developer</div>
+      <h1>김영훈</h1>
+      <p>꾸준히 성장하는 웹 개발자입니다.<br>사용자 경험을 고민하며 코드를 씁니다.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
+        <a href="https://github.com/zerohun21" class="btn btn-outline" target="_blank">GitHub</a>
+      </div>
     </header>
 
-    <section>
+    <hr class="divider" />
+
+    <!-- About -->
+    <section id="about">
+      <div class="section-label">About</div>
       <h2>소개</h2>
-      <p>안녕하세요! 꾸준히 성장하고 싶은 개발자 김영훈입니다.</p>
+      <p class="about-text">
+        안녕하세요! 꾸준히 성장하고 싶은 개발자 김영훈입니다.
+        사용자 친화적인 인터페이스를 만드는 데 관심이 많으며,
+        새로운 기술을 배우고 적용하는 것을 즐깁니다.
+      </p>
     </section>
 
-    <section>
+    <hr class="divider" />
+
+    <!-- Skills -->
+    <section id="skills">
+      <div class="section-label">Skills</div>
       <h2>기술 스택</h2>
-      <ul>
-        <li>HTML / CSS / JavaScript</li>
-        <li>React</li>
-        <li>Git / GitHub</li>
-      </ul>
+      <div class="skill-groups">
+        <div class="skill-group">
+          <h3>Frontend</h3>
+          <div class="skill-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">React</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Tools</h3>
+          <div class="skill-tags">
+            <span class="tag">Git</span>
+            <span class="tag">GitHub</span>
+            <span class="tag">VS Code</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section>
+    <hr class="divider" />
+
+    <!-- Projects -->
+    <section id="projects">
+      <div class="section-label">Projects</div>
       <h2>프로젝트</h2>
+      <div class="projects-grid">
 
-      <div class="project">
-        <h3>프로젝트 1</h3>
-        <p>프로젝트 설명을 여기에 작성하세요.</p>
-        <a href="#">GitHub 링크</a>
-      </div>
+        <div class="project-card">
+          <h3>프로젝트 1</h3>
+          <p>프로젝트 설명을 여기에 작성하세요. 어떤 문제를 해결했는지, 무엇을 배웠는지 간략히 적어주세요.</p>
+          <div class="project-tags">
+            <span class="project-tag">React</span>
+            <span class="project-tag">JavaScript</span>
+          </div>
+          <a href="#" class="project-link">GitHub →</a>
+        </div>
 
-      <div class="project">
-        <h3>프로젝트 2</h3>
-        <p>프로젝트 설명을 여기에 작성하세요.</p>
-        <a href="#">GitHub 링크</a>
+        <div class="project-card">
+          <h3>프로젝트 2</h3>
+          <p>프로젝트 설명을 여기에 작성하세요. 어떤 문제를 해결했는지, 무엇을 배웠는지 간략히 적어주세요.</p>
+          <div class="project-tags">
+            <span class="project-tag">HTML</span>
+            <span class="project-tag">CSS</span>
+          </div>
+          <a href="#" class="project-link">GitHub →</a>
+        </div>
+
       </div>
     </section>
 
+    <!-- Footer -->
     <footer>© 2025 김영훈. All rights reserved.</footer>
+
   </body>
 </html>
